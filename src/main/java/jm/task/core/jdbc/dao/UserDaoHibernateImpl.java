@@ -4,6 +4,7 @@ import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,10 +100,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try{
             session = Util.getSessionFactory().openSession();
             session.beginTransaction();
-            //String SQLGet = "select * from user";
-            // list = session.createSQLQuery(SQLGet).list();
             list = session.createCriteria(User.class).list();
-            //list = session.createQuery("From " + User.class.getSimpleName()).list();
             session.getTransaction().commit();
         }
         catch (Exception ex){
@@ -121,6 +119,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try{
             session = Util.getSessionFactory().openSession();
             session.beginTransaction();
+            session.createQuery("DELETE from user").executeUpdate();
 
             session.getTransaction().commit();
         }
